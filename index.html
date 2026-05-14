@@ -213,7 +213,7 @@ msalInstance.handleRedirectPromise().then(function() {
 
 async function getToken(scopes) {
   try {
-    var r = await msalInstance.acquireTokenSilent({scopes:scopes, account:currentAccount});
+    await msalInstance.acquireTokenRedirect({scopes:scopes, account:currentAccount});
     return r.accessToken;
   } catch(e) {
     var r = await msalInstance.acquireTokenPopup({scopes:scopes, account:currentAccount});
@@ -224,9 +224,7 @@ async function getToken(scopes) {
 async function signIn() {
   if (!msalInstance) { document.getElementById('login-err').innerHTML='<div class="sp-err">Patientez et réessayez.</div>'; return; }
   try {
-    var resp = await msalInstance.loginPopup({scopes:['User.Read','Calendars.Read']});
-    currentAccount = resp.account;
-    await afterLogin();
+    await msalInstance.loginRedirect({scopes:['User.Read','Calendars.Read']});
   } catch(e) {
     document.getElementById('login-err').innerHTML = '<div class="sp-err">Erreur de connexion : '+e.message+'</div>';
   }
