@@ -289,31 +289,31 @@ var url = 'https://graph.microsoft.com/v1.0/sites/benevolatbeauce.sharepoint.com
 function mergeSPClients(items) {
   items.forEach(function(item) {
     var f = item.fields || item;
-    var nom = f['Nom_x002b_Pr_x00e9_nom'] || f['Nom+Pr\u00e9nom'] || f['NomPr\u00e9nom'] || f.Title || '';
+    var nom = f.field_11 || f.Title || '';
     var existing = S.clients.find(function(c) { return c.spId === item.id; });
     var client = {
       id: existing ? existing.id : S.nextClientId++,
       spId: item.id, nom: nom,
-      tel: f['T_x00e9_l_x00e9_phone'] || f.Telephone || '',
-      sexe: f.Sexe || '',
-      age: f['_x00c2_ge'] || f.Age || '',
-      anniversaire: f.Anniversaire ? f.Anniversaire.slice(0,10) : '',
-      adresse: f.Adresse || '',
-      municipalite: f['Municipalit_x00e9_'] || '',
-      membrePA: !!(f['Membres_x0020_PA']),
-      periode: f.Title || '',
-      jasette: parseFloat(f.Jasette)||0,
-      formationPA: parseFloat(f['Formation_x0020_PA'])||0,
-      zen: parseFloat(f.Zen)||0,
-      heuresGroupes: parseFloat(f['Heures_x0020_re_x00e7_ues_x0020_groupes'])||0,
-      lienAide: f['Lien_x0020_avec_x0020_la_x0020_personne_x0020_aid_x00e9_e'] || '',
-      nomAide: f['Nom_x0020_Personne_x0020_Aid_x00e9_e'] || '',
-      sexeAide: f['Sexe_x0020_de_x0020_l_x0027_Aid_x00e9_'] || '',
-      ageAide: f['_x00c2_ge_x0020_de_x0020_la_x0020_personne_x0020_aid_x00e9_e'] || '',
-      probleme: f['Probl_x00e8_me_x0020__x0028_maladie_x0020_etc_x0029_'] || '',
-      seulAide: !!(f['Vie_x0020_seule_x003f_']),
-      lieuVie: f['Lieu_x0020_de_x0020_Vie'] || '',
-      moisRencontre: f['Mois_x0020_de_x0020_rencontre'] || ''
+      tel: f.field_10 || '',
+sexe: f.field_13 || '',
+age: f.field_14 || '',
+anniversaire: f.field_15 ? f.field_15.slice(0,10) : '',
+adresse: f.field_7 || '',
+municipalite: f.field_8 || '',
+membrePA: !!(f.field_9),
+periode: f.Title || '',
+jasette: parseFloat(f.field_1)||0,
+formationPA: parseFloat(f.field_2)||0,
+zen: parseFloat(f.field_3)||0,
+heuresGroupes: parseFloat(f.field_4)||0,
+lienAide: f.field_16 || '',
+nomAide: f.field_17 || '',
+sexeAide: f.field_18 || '',
+ageAide: f.field_19 || '',
+probleme: f.field_20 || '',
+seulAide: !!(f.field_21),
+lieuVie: f.field_22 || '',
+moisRencontre: f.field_5 || '',
     };
     if (existing) Object.assign(existing, client);
     else S.clients.push(client);
