@@ -274,7 +274,7 @@ async function loadSPList() {
     var token = await getToken(['https://graph.microsoft.com/Sites.Read.All']);
     if (!token) return;
 var siteId = 'benevolatbeauce.sharepoint.com,ABBS-Proches-aidants';
-var url = 'https://graph.microsoft.com/v1.0/sites/benevolatbeauce.sharepoint.com:/sites/ABBS-Proches-aidants:/lists/' + SP_LIST + '/items?$expand=fields&$top=500';
+var url = 'https://graph.microsoft.com/v1.0/sites/benevolatbeauce.sharepoint.com:/sites/ABBS-Proches-aidants:/lists/ListePA/items?$expand=fields&$top=500';
     var resp = await fetch(url, { headers: { Authorization: 'Bearer ' + token } });
     if (!resp.ok) throw new Error('HTTP ' + resp.status);
     var data = await resp.json();
