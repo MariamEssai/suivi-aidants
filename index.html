@@ -150,6 +150,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-siz
 </div>
 <div id="mc"></div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/msal.js/2.38.0/msal-browser.min.js"
+  onload="if(typeof initMsal === 'function' && !msalInstance) initMsal()">
+</script>
+  
 <script>
 // ═══════════════════════════════════════════
 // CONFIGURATION — remplacez par vos vraies valeurs
@@ -622,9 +626,7 @@ window.addEventListener('load', function() {
 });
 </script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/msal.js/2.38.0/msal-browser.min.js"
-  onload="if(typeof initMsal === 'function' && !msalInstance) initMsal()">
-</script>
+
 
 </body>
 </html>
