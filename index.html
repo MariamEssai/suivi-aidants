@@ -290,10 +290,10 @@ function mergeSPClients(items) {
   items.forEach(function(item) {
     var f = item.fields || item;
     var nom = f.field_11 || f.Title || '';
-    var existing = S.clients.find(function(c) { return c.spId === item.id; });
+    var existing = S.clients.find(function(c) { return String(c.spId) === String(item.id); });;
     var client = {
       id: existing ? existing.id : S.nextClientId++,
-      spId: item.id, nom: nom,
+      spId: String(item.id), nom: nom,
       tel: f.field_10 || '',
 sexe: f.field_13 || '',
 age: f.field_14 || '',
