@@ -186,13 +186,21 @@ load();
 // ═══════════════════════════════════════════
 // MSAL
 // ═══════════════════════════════════════════
-var msalInstance = new msal.PublicClientApplication({
+var msalConfig = {
   auth: {
     clientId: CLIENT_ID,
     authority: 'https://login.microsoftonline.com/' + TENANT_ID,
     redirectUri: window.location.origin + window.location.pathname
   },
   cache: { cacheLocation: 'sessionStorage' }
+};
+var msalInstance = null;
+window.addEventListener('DOMContentLoaded', function() {
+  msalInstance = new msal.PublicClientApplication(msalConfig);
+  msalInstance.handleRedirectPromise().then(function() {
+    var accounts = msalInstance.getAllAccounts();
+    if (accounts.length > 0) { currentAccount = accounts[0]; afterLogin(); }
+  }).catch(function(e){ console.error(e); });
 });
 
 var currentAccount = null;
@@ -214,6 +222,7 @@ async function getToken(scopes) {
 }
 
 async function signIn() {
+  if (!msalInstance) { document.getElementById('login-err').innerHTML='<div class="sp-err">Patientez et réessayez.</div>'; return; }
   try {
     var resp = await msalInstance.loginPopup({scopes:['User.Read','Calendars.Read']});
     currentAccount = resp.account;
