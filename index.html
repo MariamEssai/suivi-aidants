@@ -195,8 +195,24 @@ var msalConfig = {
   cache: { cacheLocation: 'sessionStorage' }
 };
 var msalInstance = null;
-window.addEventListener('DOMContentLoaded', function() {
-  msalInstance = new msal.PublicClientApplication(msalConfig);
+window.addEventListener('load', function() {
+  try {
+    msalInstance = new msal.PublicClientApplication(msalConfig);
+    msalInstance.handleRedirectPromise().then(function(resp) {
+      if (resp && resp.account) {
+        currentAccount = resp.account;
+        afterLogin();
+      } else {
+        var accounts = msalInstance.getAllAccounts();
+        if (accounts.length > 0) { currentAccount = accounts[0]; afterLogin(); }
+      }
+    }).catch(function(e){
+      document.getElementById('login-err').innerHTML = '<div class="sp-err">Erreur retour: '+e.message+'</div>';
+    });
+  } catch(e) {
+    document.getElementById('login-err').innerHTML = '<div class="sp-err">Erreur init: '+e.message+'</div>';
+  }
+});
   msalInstance.handleRedirectPromise().then(function(resp) {
     if (resp && resp.account) {
       currentAccount = resp.account;
