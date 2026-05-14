@@ -278,6 +278,7 @@ var url = 'https://graph.microsoft.com/v1.0/sites/benevolatbeauce.sharepoint.com
     var resp = await fetch(url, { headers: { Authorization: 'Bearer ' + token } });
     if (!resp.ok) throw new Error('HTTP ' + resp.status);
     var data = await resp.json();
+    console.log('Premier item:', JSON.stringify(data.value[0].fields, null, 2));
     mergeSPClients(data.value);
     el.innerHTML = '<div style="font-size:10px;color:#107c10;padding:4px 0">✓ ' + data.value.length + ' aidants</div>';
   } catch(e) {
