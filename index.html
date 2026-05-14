@@ -288,7 +288,7 @@ var url = 'https://graph.microsoft.com/v1.0/sites/benevolatbeauce.sharepoint.com
 function mergeSPClients(items) {
   items.forEach(function(item) {
     var f = item.fields || item;
-    var nom = f['Nom_x002b_Pr_x00e9_nom'] || f.Title || '';
+    var nom = f['Nom_x002b_Pr_x00e9_nom'] || f['Nom+Pr\u00e9nom'] || f['NomPr\u00e9nom'] || f.Title || '';
     var existing = S.clients.find(function(c) { return c.spId === item.id; });
     var client = {
       id: existing ? existing.id : S.nextClientId++,
