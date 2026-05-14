@@ -260,8 +260,8 @@ async function loadSPList() {
   var el = document.getElementById('sp-status');
   el.innerHTML = '<div style="font-size:10px;color:#605e5c;padding:4px 0">⟳ Chargement...</div>';
   try {
-    var token = await getToken([SP_SITE + '/.default']);
-    var url = SP_SITE + "/_api/web/lists/getbytitle('" + SP_LIST + "')/items?$top=500";
+   var token = await getToken(['https://graph.microsoft.com/.default']);
+    var url = 'https://graph.microsoft.com/v1.0/sites/benevolatbeauce.sharepoint.com:/sites/ABBS-Proches-aidants:/lists/'+SP_LIST+'/items?$expand=fields&$top=500';
     var resp = await fetch(url, {headers:{Authorization:'Bearer '+token, Accept:'application/json;odata=nometadata'}});
     if (!resp.ok) throw new Error('HTTP ' + resp.status);
     var data = await resp.json();
@@ -311,7 +311,7 @@ function mergeSPClients(items) {
 // ═══════════════════════════════════════════
 async function loadOutlookEvents() {
   try {
-    var token = await getToken(['Calendars.Read','User.Read']);
+    var token = await getToken(['https://graph.microsoft.com/Calendars.Read','https://graph.microsoft.com/User.Read']);
     var now = new Date();
     var start = new Date(now.getFullYear(), now.getMonth()-1, 1).toISOString();
     var end   = new Date(now.getFullYear(), now.getMonth()+3, 0).toISOString();
