@@ -231,7 +231,7 @@ async function getToken(scopes) {
 async function signIn() {
   if (!msalInstance) { document.getElementById('login-err').innerHTML='<div class="sp-err">Patientez et réessayez.</div>'; return; }
   try {
-    await msalInstance.loginRedirect({scopes:['User.Read','Calendars.Read']});
+    await msalInstance.loginRedirect({scopes:['User.Read']});
   } catch(e) {
     document.getElementById('login-err').innerHTML = '<div class="sp-err">Erreur de connexion : '+e.message+'</div>';
   }
