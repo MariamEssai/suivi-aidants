@@ -279,6 +279,7 @@ var url = 'https://graph.microsoft.com/v1.0/sites/benevolatbeauce.sharepoint.com
     if (!resp.ok) throw new Error('HTTP ' + resp.status);
     var data = await resp.json();
     console.log('Premier item:', JSON.stringify(data.value[0], null, 2));
+    console.log('data.value length:', data.value ? data.value.length : 'undefined');
     mergeSPClients(data.value);
     el.innerHTML = '<div style="font-size:10px;color:#107c10;padding:4px 0">✓ ' + data.value.length + ' aidants</div>';
   } catch(e) {
@@ -290,7 +291,7 @@ function mergeSPClients(items) {
   items.forEach(function(item) {
     var f = item;
     var nom = f.field_11 || f.Title || '';
-    console.log('nom calculé:', nom, 'field_11:', f.field_11, 'Title:', f.Title);
+    console.log('MERGE appelé, items:', items.length, 'premier nom:', items[0] ? (items[0].field_11 || items[0].Title) : 'vide');
     var existing = S.clients.find(function(c) { return String(c.spId) === String(item.id); });;
     var client = {
       id: existing ? existing.id : S.nextClientId++,
